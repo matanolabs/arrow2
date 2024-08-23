@@ -279,6 +279,10 @@ impl From<arrow_schema::DataType> for DataType {
             DataType::Decimal128(precision, scale) => Self::Decimal(precision as _, scale as _),
             DataType::Decimal256(precision, scale) => Self::Decimal256(precision as _, scale as _),
             DataType::RunEndEncoded(_, _) => panic!("Run-end encoding not supported by arrow2"),
+            DataType::BinaryView => Self::Binary,
+            DataType::Utf8View => Self::Utf8,
+            DataType::ListView(f) => Self::List(Box::new(f.into())),
+            DataType::LargeListView(f) => Self::LargeList(Box::new(f.into())),
         }
     }
 }
